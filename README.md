@@ -14,8 +14,6 @@ This is a Python module implementing algorithms taught in MAT4930 - Number Theor
 3. To call the algorithms, include `ntcrypy` in the same directory as your Python scripts and import the relevant submodule, for example:
 
 	```py
-	import ntcrypy.nt as numt
+	from ntcrypy import numt
 	solutions = numt.solve_congruence(114, 33, 18)
 	```
-
-Note that there is a standard library named [`nt`](https://en.wikipedia.org/wiki/Windows_NT) included with Python installations on Windows, so avoid importing `ntcrypy.nt as nt`.
