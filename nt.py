@@ -107,12 +107,9 @@ def solve_congruence(modulus, coefficient, target):
     solution = (coeff_coeff * target // divisor) % modulus
     return [solution + k * modulus for k in range(divisor)]
 
-def fuse_two_congruences(mtar_1, mtar_2):
+def fuse_two_congruences(modulus_1, target_1, modulus_2, target_2):
     """The fusion of two congruences."""
-    modulus_1, target_1 = mtar_1
-    modulus_2, target_2 = mtar_2
-    greater = modulus_1 < modulus_2
-    if greater:
+    if modulus_1 < modulus_2:
         dividend = modulus_2
         divisor = modulus_1
         coeff_0 = 0
@@ -139,12 +136,15 @@ def fuse_two_congruences(mtar_1, mtar_2):
         remainder_coeff = coeff_0 - quotient * coeff_1
         coeff_0 = coeff_1
         coeff_1 = remainder_coeff
-    modulus = modulus_1 * (modulus_2 // divisor) if greater else modulus_2 * (modulus_1 // divisor)
+    if modulus_1 < modulus_2:
+        modulus = modulus_1 * (modulus_2 // divisor)
+    else:
+        modulus = modulus_2 * (modulus_1 // divisor)
     return modulus, (target_1 - ratio * coeff_1 * modulus_1) % modulus
 
 def fuse_congruences(mtars):
     """The fusion of many congruences."""
-    fusion = fuse_two_congruences(mtars[0], mtars[1])
+    fusion = fuse_two_congruences(*mtars[0], *mtars[1])
     for i in range(2, len(mtars)):
-        fusion = fuse_two_congruences(fusion, mtars[i])
+        fusion = fuse_two_congruences(*fusion, *mtars[i])
     return fusion
