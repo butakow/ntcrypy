@@ -1,6 +1,5 @@
 """
 Nic Butakow
-2 March 2023
 Algorithms in number theory.
 """
 
